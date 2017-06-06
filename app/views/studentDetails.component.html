@@ -1,0 +1,42 @@
+<!--
+   Created by IFML2NG2 on 2017/05/30 10:31:57
+-->
+
+<div class="col-md-12">
+	<div name="content">
+	 	<table id="_LCX6cIXaEea82rBnn6BioA" name="studentDetails" [ngClass]="_displayPropertiesService.displayProperties.tableClass">
+	 	<tr>
+	 		<th>
+	 			{{_resourceService.getLangString('vStudentId')}}
+	 		</th>
+	 	<td>
+	 		{{selectedStudentBinding.studentId}}
+	 	</td>
+	 	</tr>
+	 	<tr>
+	 		<th>
+	 			{{_resourceService.getLangString('vStudentFirstname')}}
+	 		</th>
+	 	<td>
+	 		{{selectedStudentBinding.firstname}}
+	 	</td>
+	 	</tr>
+	 	<tr>
+	 		<th>
+	 			{{_resourceService.getLangString('vStudentLastname')}}
+	 		</th>
+	 	<td>
+	 		{{selectedStudentBinding.lastname}}
+	 	</td>
+	 	</tr>
+	 	<tr>
+	 		<th>
+	 			{{_resourceService.getLangString('vStudentStatus')}}
+	 		</th>
+	 	<td>
+	 		{{selectedStudentBinding.studentStatus}}
+	 	</td>
+	 	</tr>
+	 	</table>
+	</div>
+</div>
