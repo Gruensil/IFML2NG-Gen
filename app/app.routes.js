@@ -8,6 +8,7 @@ var lentBooks_component_1 = require('./views/lentBooks.component');
 var students_component_1 = require('./views/students.component');
 var studentDetails_component_1 = require('./views/studentDetails.component');
 var bookReservations_component_1 = require('./views/bookReservations.component');
+var helpWindow_component_1 = require('./views/helpWindow.component');
 exports.routes = [
     {
         path: 'searchBooks',
@@ -40,6 +41,10 @@ exports.routes = [
     {
         path: 'bookReservations',
         component: bookReservations_component_1.BookReservationsComponent
+    },
+    {
+        path: 'helpWindow',
+        component: helpWindow_component_1.HelpWindowComponent
     },
     {
         path: '',

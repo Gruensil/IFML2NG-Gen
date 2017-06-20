@@ -1,5 +1,5 @@
 //
-// Created by IFML2NG2 on 2017/06/20 18:03:12
+// Created by IFML2NG2 on 2017/06/20 18:03:13
 //
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -23,10 +23,10 @@ var data_service_1 = require('../services/data.service');
 var displayProperties_service_1 = require('../services/displayProperties.service');
 var resource_service_1 = require('../services/resource.service');
 // domain concept imports
-var LendingFormComponent = (function () {
-    // PROTECTED REGION ID _mnIcUIC-Eea2S59Os6LSKA.lendingForm ENABLED START
+var HelpWindowComponent = (function () {
+    // PROTECTED REGION ID _dPjFoFWYEee_i6NdnvfQJg.helpWindow ENABLED START
     // PROTECTED REGION END
-    function LendingFormComponent(_router, _route, _loggerService, _authenticationService, _dataService, _displayPropertiesService, _resourceService) {
+    function HelpWindowComponent(_router, _route, _loggerService, _authenticationService, _dataService, _displayPropertiesService, _resourceService) {
         this._router = _router;
         this._route = _route;
         this._loggerService = _loggerService;
@@ -36,58 +36,38 @@ var LendingFormComponent = (function () {
         this._resourceService = _resourceService;
     }
     // stubs generated for view element events
-    LendingFormComponent.prototype.issueBook = function () {
-        this.issueBookActionAction();
+    HelpWindowComponent.prototype.submitQuestion = function () {
+        this.submitQuestionActionAction();
     };
-    LendingFormComponent.prototype.issueBookActionAction = function () {
-        // PROTECTED REGION ID _vV7RQIDmEea8AL0yBf-zEA.issueBookAction ENABLED START
-        if (this.selectedBookToIssueBinding != null) {
-            this._dataService.lendBook(this.selectedBookToIssueBinding, this.studentID, this.dueDate);
-        }
-        else if (this.selectedReservationBinding != null) {
-            this._dataService.lendBook(this.selectedReservationBinding.reservedBook, this.studentID, this.dueDate);
-        }
-        this.bookISBN = '';
-        this.studentID = '';
+    HelpWindowComponent.prototype.submitQuestionActionAction = function () {
+        // PROTECTED REGION ID _sCz-cFXAEee_i6NdnvfQJg.submitQuestionAction ENABLED START
+        // PROTECTED REGION END
+    };
+    HelpWindowComponent.prototype.findClosestLocation = function () {
+        this.findLocationActionAction();
+    };
+    HelpWindowComponent.prototype.findLocationActionAction = function () {
+        // PROTECTED REGION ID _slgb0FXAEee_i6NdnvfQJg.findLocationAction ENABLED START
+        this._router.navigate(['searchBooks']);
         // PROTECTED REGION END
     };
     // called when component is initiated			
-    LendingFormComponent.prototype.ngOnInit = function () {
-        var _this = this;
+    HelpWindowComponent.prototype.ngOnInit = function () {
         // Check authentication requirements, if empty, no authentication requirements for this component
-        this._authenticationService.checkPrivilegesIncludeOne([{ role: 'staff' }]);
-        // Incoming Navigation Flows with Parameter Binding
-        this._route.params.subscribe(function (params) {
-            if (params['bookToIssueBinding'] != undefined) {
-                _this.selectedBookToIssueBinding = JSON.parse(decodeURI(params['bookToIssueBinding']));
-            }
-            if (params['reservationBinding'] != undefined) {
-                _this.selectedReservationBinding = JSON.parse(decodeURI(params['reservationBinding']));
-            }
-        });
-        // PROTECTED REGION ID _mnIcUIC-Eea2S59Os6LSKA.ngOnInit ENABLED START
-        if (this.selectedBookToIssueBinding != null) {
-            this.bookISBN = this.selectedBookToIssueBinding.bookInfo.isbn;
-        }
-        else if (this.selectedReservationBinding != null) {
-            this.bookISBN = this.selectedReservationBinding.reservedBook.bookInfo.isbn;
-            this.studentID = this.selectedReservationBinding.reservedBy.studentId;
-        }
-        this.dueDate = new Date();
-        this.dueDate.setDate(this.dueDate.getDate() + 30);
+        // PROTECTED REGION ID _dPjFoFWYEee_i6NdnvfQJg.ngOnInit ENABLED START
         // PROTECTED REGION END
     };
-    LendingFormComponent = __decorate([
+    HelpWindowComponent = __decorate([
         core_1.Component({
-            selector: 'lendingForm',
-            templateUrl: 'app/views/lendingForm.component.html',
+            selector: 'helpWindow',
+            templateUrl: 'app/views/helpWindow.component.html',
             providers: [logger_service_1.LoggerService, displayProperties_service_1.DisplayPropertiesService, authentication_service_1.AuthenticationService, data_service_1.DataService],
             directives: [common_1.NgClass],
             pipes: []
         }), 
         __metadata('design:paramtypes', [router_2.Router, router_1.ActivatedRoute, logger_service_1.LoggerService, authentication_service_1.AuthenticationService, data_service_1.DataService, displayProperties_service_1.DisplayPropertiesService, resource_service_1.ResourceService])
-    ], LendingFormComponent);
-    return LendingFormComponent;
+    ], HelpWindowComponent);
+    return HelpWindowComponent;
 }());
-exports.LendingFormComponent = LendingFormComponent;
-//# sourceMappingURL=lendingForm.component.js.map
+exports.HelpWindowComponent = HelpWindowComponent;
+//# sourceMappingURL=helpWindow.component.js.map

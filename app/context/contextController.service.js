@@ -17,10 +17,6 @@ var core_1 = require('@angular/core');
 var Rx_1 = require('rxjs/Rx');
 var Rx_2 = require('rxjs/Rx');
 var profile_1 = require('./profile/profile');
-var user_profile_1 = require('./profile/user.profile');
-var environment_profile_1 = require('./profile/environment.profile');
-var platform_profile_1 = require('./profile/platform.profile');
-var app_profile_1 = require('./profile/app.profile');
 var nools_service_1 = require('../services/nools.service');
 var userData_service_1 = require('./providers/userData.service');
 var faceDetection_service_1 = require('./providers/faceDetection.service');
@@ -44,24 +40,6 @@ var ContextControllerService = (function () {
         this.timeFast = 750; //update Time for the Fast Update in ms
         this.timeSlow = 8000; //update Time for the Slow Update in ms
         this.profile = new profile_1.Profile();
-        if (localStorage.getItem('profile') != null) {
-            console.log("old localStorage");
-            var temp;
-            temp = JSON.parse(localStorage.getItem('profile'));
-            console.log(temp);
-            temp.user.__proto__ = user_profile_1.UserProfile.prototype;
-            temp.environment.__proto__ = environment_profile_1.EnvironmentProfile.prototype;
-            temp.platform.__proto__ = platform_profile_1.PlatformProfile.prototype;
-            temp.app.__proto__ = app_profile_1.AppProfile.prototype;
-            this.profile.setApp(temp.app);
-            this.profile.setUser(temp.user);
-            this.profile.setEnvironment(temp.environment);
-            this.profile.setPlatform(temp.platform);
-        }
-        else {
-            console.log("new localStorage");
-            localStorage.setItem('profile', this.profile.toJSON());
-        }
         this.flow.setProfile(this.profile);
         this.session = this.flow.getSession();
         this.age = this.faceDetectionService.ageSubject.subscribe(function (age) {
@@ -166,6 +144,7 @@ var ContextControllerService = (function () {
         this.faceDetectionService.getFaceDetected();
         this.deviceAPIService.getAmbientLight();
         this.deviceAPIService.getMovement();
+        this.appStateService.getUserRole();
     };
     ContextControllerService.prototype.slow = function () {
         this.deviceAPIService.getLanguage();
@@ -188,7 +167,6 @@ var ContextControllerService = (function () {
         });
         this.changed = true;
         this._changedSubject.next(this.changed);
-        localStorage.setItem('profile', this.profile.toJSON());
     };
     ContextControllerService.prototype.setActivation = function (status) {
         this.active = status;

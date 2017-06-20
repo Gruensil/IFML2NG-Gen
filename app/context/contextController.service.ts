@@ -11,10 +11,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { Profile } from './profile/profile';
-import { UserProfile } from './profile/user.profile';
-import { EnvironmentProfile } from './profile/environment.profile';
-import { PlatformProfile } from './profile/platform.profile';
-import { AppProfile } from './profile/app.profile';
 
 import { DisplayProperties } from '../helper/displayProperties'
 
@@ -68,26 +64,6 @@ export class ContextControllerService{
 	){
 		
 		this.profile = new Profile();
-		if(localStorage.getItem('profile') != null){
-			console.log("old localStorage");
-			var temp: any;
-			temp = JSON.parse(localStorage.getItem('profile'));
-			console.log(temp);
-
-			temp.user.__proto__ = UserProfile.prototype;
-			temp.environment.__proto__ = EnvironmentProfile.prototype;
-			temp.platform.__proto__ = PlatformProfile.prototype;
-			temp.app.__proto__ = AppProfile.prototype;
-
-			this.profile.setApp(temp.app);
-			this.profile.setUser(temp.user);
-			this.profile.setEnvironment(temp.environment);
-			this.profile.setPlatform(temp.platform);
-		}else{
-			console.log("new localStorage");
-			localStorage.setItem('profile', this.profile.toJSON());
-		}
-
 		this.flow.setProfile(this.profile);
 		
 		this.session = this.flow.getSession();
@@ -198,6 +174,7 @@ export class ContextControllerService{
 		this.faceDetectionService.getFaceDetected();
 		this.deviceAPIService.getAmbientLight();
 		this.deviceAPIService.getMovement();
+		this.appStateService.getUserRole();
 	}
 	
     slow(){
@@ -223,7 +200,6 @@ export class ContextControllerService{
 	  });
 	  this.changed = true;
 	  this._changedSubject.next(this.changed);
-	  localStorage.setItem('profile', this.profile.toJSON());
 	}
 	
 	public setActivation( status ){

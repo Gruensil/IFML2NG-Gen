@@ -40,10 +40,6 @@ import { Weather } from '../context/types/Weather';
                             <td>Gender:</td>
                             <td>{{gender}}</td> 
                         </tr>
-                        <tr>
-                            <td>User Role:</td>
-                            <td>{{userRole}}</td> 
-                        </tr>
                     </table>
                 </div>
                 <div class="col-md-3">
@@ -98,7 +94,6 @@ export class NoolsTestBarComponent {
     private deviceType;
     private ambientLight;
     private weather;
-    private userRole;
 
 //    private userWeakVision: boolean;
 //    private userSelfEfficiacy: string;
@@ -120,7 +115,6 @@ export class NoolsTestBarComponent {
             this.deviceType = this.profile.getPlatform().getDeviceType();
             this.ambientLight = this.profile.getEnvironment().getAmbientLight();
             this.weather = Weather[this.profile.getEnvironment().getWeather()];
-            this.userRole = this.profile.getApp().getUserRole();
             
             
 

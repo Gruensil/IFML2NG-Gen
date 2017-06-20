@@ -1,5 +1,5 @@
 //
-// Created by IFML2NG2 on 2017/06/19 23:47:32
+// Created by IFML2NG2 on 2017/06/20 18:08:44
 //
 
 // Angular Imports
@@ -27,7 +27,7 @@ import { Book } from '../data/book';
 	templateUrl: 'app/views/searchBooks.component.html',
 	providers: [LoggerService,DisplayPropertiesService,AuthenticationService,DataService],
 	directives: [NgClass ,SearchComponent ],
-	pipes: [InventoryListFilter]
+	pipes: [InventoryListFilter,]
 })
 
 export class SearchBooksComponent {

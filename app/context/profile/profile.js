@@ -17,43 +17,17 @@ var Profile = (function () {
     Profile.prototype.getUser = function () {
         return this.user;
     };
-    Profile.prototype.setUser = function (v) {
-        this.user = v;
-    };
     // get Environment profile
     Profile.prototype.getEnvironment = function () {
         return this.environment;
-    };
-    Profile.prototype.setEnvironment = function (v) {
-        this.environment = v;
     };
     // get Platform profile
     Profile.prototype.getPlatform = function () {
         return this.platform;
     };
-    Profile.prototype.setPlatform = function (v) {
-        this.platform = v;
-    };
     // get App profile
     Profile.prototype.getApp = function () {
         return this.app;
-    };
-    Profile.prototype.setApp = function (v) {
-        this.app = v;
-    };
-    // to JSON
-    Profile.prototype.toJSON = function () {
-        var json = '';
-        json += "{";
-        // serialize user
-        json += '"user":' + JSON.stringify(this.user) + ",";
-        // serialize platform
-        json += '"platform":' + JSON.stringify(this.platform) + ",";
-        //serialize environment
-        json += '"environment":' + JSON.stringify(this.environment) + ",";
-        // serialize displayProperties
-        json += '"app":' + JSON.stringify(this.app) + "}";
-        return json;
     };
     return Profile;
 }());

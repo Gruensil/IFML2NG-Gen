@@ -36,7 +36,7 @@ var AuthenticationService = (function () {
     AuthenticationService.prototype.logout = function () {
         localStorage.removeItem('user');
         this.isLoggedIn = false;
-        //this.profile.setUserRole(undefined);
+        localStorage.setItem('userRole', 'none');
         this._router.navigate(['login']);
     };
     AuthenticationService.prototype.login = function (username, pw) {
@@ -45,7 +45,7 @@ var AuthenticationService = (function () {
             localStorage.setItem('user', JSON.stringify(authenticatedUser));
             this._router.navigate(['login']);
             this.isLoggedIn = true;
-            //this.profile.setUserRole(authenticatedUser.role);
+            localStorage.setItem('userRole', authenticatedUser.role);
             return true;
         }
         return false;

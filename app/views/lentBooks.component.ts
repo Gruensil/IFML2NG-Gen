@@ -1,5 +1,5 @@
 //
-// Created by IFML2NG2 on 2017/06/19 23:47:32
+// Created by IFML2NG2 on 2017/06/20 18:08:45
 //
 
 // Angular Imports
@@ -27,7 +27,7 @@ import { BookLending } from '../data/bookLending';
 	templateUrl: 'app/views/lentBooks.component.html',
 	providers: [LoggerService,DisplayPropertiesService,AuthenticationService,DataService],
 	directives: [NgClass ,SearchComponent ],
-	pipes: [LentBooksFilter]
+	pipes: [LentBooksFilter,]
 })
 
 export class LentBooksComponent {

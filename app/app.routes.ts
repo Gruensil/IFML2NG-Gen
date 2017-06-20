@@ -8,6 +8,7 @@ import { LentBooksComponent } from './views/lentBooks.component';
 import { StudentsComponent } from './views/students.component';
 import { StudentDetailsComponent } from './views/studentDetails.component';
 import { BookReservationsComponent } from './views/bookReservations.component';
+import { HelpWindowComponent } from './views/helpWindow.component';
 
 export const routes: RouterConfig = [
 	{
@@ -41,6 +42,10 @@ export const routes: RouterConfig = [
 	{
 		path: 'bookReservations',
 		component: BookReservationsComponent
+	},
+	{
+		path: 'helpWindow',
+		component: HelpWindowComponent
 	},
 	{
 		path: '',

@@ -1,5 +1,5 @@
 //
-// Created by IFML2NG2 on 2017/06/19 23:47:32
+// Created by IFML2NG2 on 2017/06/20 18:03:13
 //
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -89,7 +89,7 @@ var BookReservationsComponent = (function () {
             templateUrl: 'app/views/bookReservations.component.html',
             providers: [logger_service_1.LoggerService, displayProperties_service_1.DisplayPropertiesService, authentication_service_1.AuthenticationService, data_service_1.DataService],
             directives: [common_1.NgClass, search_component_1.SearchComponent],
-            pipes: [reservationsList_pipe_1.ReservationsListFilter]
+            pipes: [reservationsList_pipe_1.ReservationsListFilter,]
         }), 
         __metadata('design:paramtypes', [router_2.Router, router_1.ActivatedRoute, logger_service_1.LoggerService, authentication_service_1.AuthenticationService, data_service_1.DataService, displayProperties_service_1.DisplayPropertiesService, resource_service_1.ResourceService])
     ], BookReservationsComponent);

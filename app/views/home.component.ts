@@ -1,5 +1,5 @@
 //
-// Created by IFML2NG2 on 2017/06/19 23:47:32
+// Created by IFML2NG2 on 2017/06/20 18:08:44
 //
 
 // Angular Imports
@@ -23,6 +23,7 @@ import { ResourceService } from '../services/resource.service';
 	templateUrl: 'app/views/home.component.html',
 	providers: [LoggerService,DisplayPropertiesService,AuthenticationService,DataService],
 	directives: [NgClass  ],
+	pipes: []
 })
 
 export class HomeComponent {

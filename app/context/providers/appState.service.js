@@ -20,13 +20,13 @@ var AppStateService = (function () {
     // PROTECTED REGION ID appState ENABLED START
     // PROTECTED REGION END
     function AppStateService() {
+        // PROTECTED REGION ID constructor ENABLED START
         this._moodCheckedSubject = new Rx_1.BehaviorSubject(false);
         this.moodCheckedSubject = this._moodCheckedSubject.asObservable();
         this._outsideCheckedSubject = new Rx_1.BehaviorSubject(false);
         this.outsideCheckedSubject = this._outsideCheckedSubject.asObservable();
         this._userRoleSubject = new Rx_1.BehaviorSubject("init");
         this.userRoleSubject = this._userRoleSubject.asObservable();
-        // PROTECTED REGION ID constructor ENABLED START
         this.moodChecked = false;
         this.outsideChecked = false;
         // PROTECTED REGION END
@@ -43,6 +43,9 @@ var AppStateService = (function () {
     };
     AppStateService.prototype.getUserRole = function () {
         // PROTECTED REGION ID userRole ENABLED START
+        if (localStorage.getItem('userRole') != null) {
+            this.userRole = localStorage.getItem('userRole');
+        }
         // PROTECTED REGION END
         this._userRoleSubject.next(this.userRole);
     };

@@ -19,18 +19,19 @@ import { ResourceService } from '../services/resource.service';
 // domain concept imports
 
 @Component({
-	selector: 'studentDetails',
-	templateUrl: 'app/views/studentDetails.component.html',
+	selector: 'helpWindow',
+	templateUrl: 'app/views/helpWindow.component.html',
 	providers: [LoggerService,DisplayPropertiesService,AuthenticationService,DataService],
 	directives: [NgClass  ],
 	pipes: []
 })
 
-export class StudentDetailsComponent {
+export class HelpWindowComponent {
 	//Generate variables for parameters and bindings
-	selectedStudentBinding:  any;
-	isSelectedStudentBinding:  boolean;
-	// PROTECTED REGION ID _oMKJgIXZEea82rBnn6BioA.studentDetails ENABLED START
+	// bindings for fields in form
+		question: string;
+		location: string;
+	// PROTECTED REGION ID _dPjFoFWYEee_i6NdnvfQJg.helpWindow ENABLED START
 	// PROTECTED REGION END
 
 	constructor(
@@ -45,22 +46,34 @@ export class StudentDetailsComponent {
 	}
 		
 	// stubs generated for view element events
+	
+		submitQuestion(){
+			this.submitQuestionActionAction();
+		}
+	
+		submitQuestionActionAction(){
+			// PROTECTED REGION ID _sCz-cFXAEee_i6NdnvfQJg.submitQuestionAction ENABLED START
+			// PROTECTED REGION END
+		}
+	
+		findClosestLocation(){
+			this.findLocationActionAction();
+		}
+	
+		findLocationActionAction(){
+			// PROTECTED REGION ID _slgb0FXAEee_i6NdnvfQJg.findLocationAction ENABLED START
+            this._router.navigate(['searchBooks']);
+			// PROTECTED REGION END
+		}
 
 	
 	// called when component is initiated			
 	ngOnInit(){
 		// Check authentication requirements, if empty, no authentication requirements for this component
-		this._authenticationService.checkPrivilegesIncludeOne([{role:'staff'}]);
 		
 		
-		// Incoming Navigation Flows with Parameter Binding
-		this._route.params.subscribe(params => {
-			if(params['studentBinding'] != undefined){
-				this.selectedStudentBinding = JSON.parse(decodeURI(params['studentBinding']));
-			}
-		});
 		
-		// PROTECTED REGION ID _oMKJgIXZEea82rBnn6BioA.ngOnInit ENABLED START
+		// PROTECTED REGION ID _dPjFoFWYEee_i6NdnvfQJg.ngOnInit ENABLED START
 		// PROTECTED REGION END
 	}
 }
