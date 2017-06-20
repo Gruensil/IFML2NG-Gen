@@ -1,5 +1,5 @@
 //
-// Created by IFML2NG2 on 2017/05/30 10:31:57
+// Created by IFML2NG2 on 2017/06/19 23:47:32
 //
 
 // Angular Imports
@@ -73,6 +73,8 @@ export class SearchBooksComponent {
 	
 		reserveBookActionAction(){
 			// PROTECTED REGION ID _A2qEQIC_Eea2S59Os6LSKA.reserveBookAction ENABLED START
+			this._dataService.reserveBook(this.selectedBookBinding.bookId, this._authenticationService.getId());
+    		this.getBookBinding();
 			// PROTECTED REGION END
 		}
 	
@@ -88,6 +90,7 @@ export class SearchBooksComponent {
 	// stubs for data service calls for data bindings
 	getBookBinding(){
 		// PROTECTED REGION ID _sU8p0IC1Eea2S59Os6LSKA.getBookBinding ENABLED START
+		this._dataService.getBooks().then(lendings => this.bookBinding = lendings)
 		// PROTECTED REGION END
 	}
 	

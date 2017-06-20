@@ -181,4 +181,7 @@ export class FaceDetectionService {
 		
 		this._faceDetectedSubject.next(this.faceDetected);
 	}
+	
+	// PROTECTED REGION ID addMethods ENABLED START
+	// PROTECTED REGION END
 }

@@ -11,6 +11,10 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { Profile } from './profile/profile';
+import { UserProfile } from './profile/user.profile';
+import { EnvironmentProfile } from './profile/environment.profile';
+import { PlatformProfile } from './profile/platform.profile';
+import { AppProfile } from './profile/app.profile';
 
 import { DisplayProperties } from '../helper/displayProperties'
 
@@ -20,7 +24,7 @@ import { UserDataService } from './providers/userData.service';
 import { FaceDetectionService } from './providers/faceDetection.service';
 import { DeviceAPIService } from './providers/deviceAPI.service';
 import { GeocodingService } from './providers/geocoding.service';
-import { WeatherService } from './providers/weather.service';
+import { AppStateService } from './providers/appState.service';
 
 @Injectable()
 export class ContextControllerService{
@@ -43,11 +47,15 @@ export class ContextControllerService{
     private ambientLight: Subscription;
     private movement: Subscription;
     private location: Subscription;
+    private weather: Subscription;
     private deviceType: Subscription;
+    private moodChecked: Subscription;
+    private outsideChecked: Subscription;
+    private userRole: Subscription;
     
-	private timeInit: number = 0;       //initialization for the Timer
+	private timeInit: number = 0;      //initialization for the Timer
 	private timeFast: number = 750;    //update Time for the Fast Update in ms
-	private timeSlow: number = 6000;   //update Time for the Slow Update in ms
+	private timeSlow: number = 8000;   //update Time for the Slow Update in ms
 	
 	
 	constructor(
@@ -56,10 +64,30 @@ export class ContextControllerService{
 		private faceDetectionService: FaceDetectionService,
 		private deviceAPIService: DeviceAPIService,
 		private geocodingService: GeocodingService,
-		private weatherService: WeatherService
+		private appStateService: AppStateService
 	){
 		
 		this.profile = new Profile();
+		if(localStorage.getItem('profile') != null){
+			console.log("old localStorage");
+			var temp: any;
+			temp = JSON.parse(localStorage.getItem('profile'));
+			console.log(temp);
+
+			temp.user.__proto__ = UserProfile.prototype;
+			temp.environment.__proto__ = EnvironmentProfile.prototype;
+			temp.platform.__proto__ = PlatformProfile.prototype;
+			temp.app.__proto__ = AppProfile.prototype;
+
+			this.profile.setApp(temp.app);
+			this.profile.setUser(temp.user);
+			this.profile.setEnvironment(temp.environment);
+			this.profile.setPlatform(temp.platform);
+		}else{
+			console.log("new localStorage");
+			localStorage.setItem('profile', this.profile.toJSON());
+		}
+
 		this.flow.setProfile(this.profile);
 		
 		this.session = this.flow.getSession();
@@ -112,9 +140,33 @@ export class ContextControllerService{
 				this.onModified();
 			}
 		});
+		this.weather = this.geocodingService.weatherSubject.subscribe(weather => {
+			if(this.active){
+				this.profile.getEnvironment().setWeather(weather);
+				this.onModified();
+			}
+		});
 		this.deviceType = this.deviceAPIService.deviceTypeSubject.subscribe(deviceType => {
 			if(this.active){
 				this.profile.getPlatform().setDeviceType(deviceType);
+				this.onModified();
+			}
+		});
+		this.moodChecked = this.appStateService.moodCheckedSubject.subscribe(moodChecked => {
+			if(this.active){
+				this.profile.getApp().setMoodChecked(moodChecked);
+				this.onModified();
+			}
+		});
+		this.outsideChecked = this.appStateService.outsideCheckedSubject.subscribe(outsideChecked => {
+			if(this.active){
+				this.profile.getApp().setOutsideChecked(outsideChecked);
+				this.onModified();
+			}
+		});
+		this.userRole = this.appStateService.userRoleSubject.subscribe(userRole => {
+			if(this.active){
+				this.profile.getApp().setUserRole(userRole);
 				this.onModified();
 			}
 		});
@@ -122,7 +174,7 @@ export class ContextControllerService{
 		//Manager checks APIs fast
 		let timerFast = Observable.timer(this.timeInit,this.timeFast);
 		timerFast.subscribe(t => {
-		    console.log(t);
+		    //console.log(t);
 		    if(this.active){
 		    	this.fast();
 		    }
@@ -131,7 +183,7 @@ export class ContextControllerService{
 		//Manager checks APIs slow
 		let timerSlow = Observable.timer(this.timeInit,this.timeSlow);
 		timerSlow.subscribe(t => {
-		    console.log(t);
+		    //console.log(t);
 		    if(this.active){
 		    	this.slow();
 		    }
@@ -151,7 +203,9 @@ export class ContextControllerService{
     slow(){
 		this.deviceAPIService.getLanguage();
 		this.geocodingService.getLocation();
+		this.geocodingService.getWeather();
 		this.deviceAPIService.getDeviceType();
+		this.appStateService.getMoodChecked();
     }
     
     //returns Profile instance
@@ -169,6 +223,7 @@ export class ContextControllerService{
 	  });
 	  this.changed = true;
 	  this._changedSubject.next(this.changed);
+	  localStorage.setItem('profile', this.profile.toJSON());
 	}
 	
 	public setActivation( status ){

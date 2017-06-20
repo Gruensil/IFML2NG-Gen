@@ -1,5 +1,5 @@
 //
-// Created by IFML2NG2 on 2017/05/30 10:31:57
+// Created by IFML2NG2 on 2017/06/19 23:47:32
 //
 
 // Angular Imports
@@ -75,6 +75,7 @@ export class BookReservationsComponent {
 	// stubs for data service calls for data bindings
 	getReservationBinding(){
 		// PROTECTED REGION ID _zM55EIaoEeaTJocisBH8lA.getReservationBinding ENABLED START
+		this._dataService.getBookReservations().then(reservations => this.reservationBinding = reservations);
 		// PROTECTED REGION END
 	}
 	

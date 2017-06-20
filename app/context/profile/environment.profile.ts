@@ -3,12 +3,14 @@
 // contains properties for environment context
 
 import { Level } from '../types/Level';
+import { Weather } from '../types/Weather';
 
 export class EnvironmentProfile {
 	
 	private ambientLight: Level;
 	private movement: Level;
 	private location: string;
+	private weather: Weather;
     
     constructor(){};
     
@@ -32,6 +34,13 @@ export class EnvironmentProfile {
 	
 	public getLocation(): string{
 	    return this.location;
+	}
+	public setWeather(v: Weather){
+	    this.weather = v;
+	};
+	
+	public getWeather(): Weather{
+	    return this.weather;
 	}
 }
 

@@ -25,6 +25,13 @@ var EnvironmentProfile = (function () {
     EnvironmentProfile.prototype.getLocation = function () {
         return this.location;
     };
+    EnvironmentProfile.prototype.setWeather = function (v) {
+        this.weather = v;
+    };
+    ;
+    EnvironmentProfile.prototype.getWeather = function () {
+        return this.weather;
+    };
     return EnvironmentProfile;
 }());
 exports.EnvironmentProfile = EnvironmentProfile;

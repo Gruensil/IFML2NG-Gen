@@ -16,7 +16,9 @@ var userData_service_1 = require('./context/providers/userData.service');
 var faceDetection_service_1 = require('./context/providers/faceDetection.service');
 var deviceAPI_service_1 = require('./context/providers/deviceAPI.service');
 var geocoding_service_1 = require('./context/providers/geocoding.service');
-var weather_service_1 = require('./context/providers/weather.service');
+var appState_service_1 = require('./context/providers/appState.service');
+// PROTECTED REGION ID imports ENABLED START
+// PROTECTED REGION END
 platform_browser_dynamic_1.bootstrap(app_component_1.AppComponent, [
     app_routes_1.APP_ROUTER_PROVIDERS,
     http_1.HTTP_PROVIDERS,
@@ -31,6 +33,6 @@ platform_browser_dynamic_1.bootstrap(app_component_1.AppComponent, [
     faceDetection_service_1.FaceDetectionService,
     deviceAPI_service_1.DeviceAPIService,
     geocoding_service_1.GeocodingService,
-    weather_service_1.WeatherService,
+    appState_service_1.AppStateService,
 ]);
 //# sourceMappingURL=main.js.map

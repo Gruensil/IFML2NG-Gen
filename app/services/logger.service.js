@@ -15,6 +15,10 @@ var LoggerService = (function () {
     LoggerService.prototype.log = function (entry) {
         console.log(entry);
     };
+    LoggerService.prototype.alert = function (message) {
+        console.log(message);
+        window.alert(message);
+    };
     LoggerService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])

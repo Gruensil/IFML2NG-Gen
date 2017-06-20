@@ -14,16 +14,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 // in the folder: static/app/context/providers/
 var core_1 = require('@angular/core');
 var Rx_1 = require('rxjs/Rx');
+var Weather_1 = require('../types/Weather');
 // PROTECTED REGION END
 var GeocodingService = (function () {
     // PROTECTED REGION END
     function GeocodingService() {
         // PROTECTED REGION ID constructor ENABLED START
+        var _this = this;
         this._locationSubject = new Rx_1.BehaviorSubject("init");
         this.locationSubject = this._locationSubject.asObservable();
+        this._weatherSubject = new Rx_1.BehaviorSubject(0);
+        this.weatherSubject = this._weatherSubject.asObservable();
         // PROTECTED REGION ID geocoding ENABLED START
         this.geocoder = new google.maps.Geocoder;
+        //init value for latitude and longitude
         this.latlng = new google.maps.LatLng({ lat: 51, lng: 8 });
+        this.openWeatherMapKey = "ebc3bac589e89ccc0cf69213042400c5";
+        // PROTECTED REGION ID addMethods ENABLED START
+        this.proccessResults = function () {
+            var results = JSON.parse(_this.request.responseText);
+            if (results != undefined) {
+                var condition = results.weather[0].main;
+                switch (condition) {
+                    case "Clear": {
+                        _this.weather = Weather_1.Weather.sunny;
+                        break;
+                    }
+                    case "Rain": {
+                        _this.weather = Weather_1.Weather.rainy;
+                        break;
+                    }
+                    default: {
+                        _this.weather = Weather_1.Weather.cloudy;
+                    }
+                }
+            }
+        };
         // PROTECTED REGION END
     }
     GeocodingService.prototype.getLocation = function () {
@@ -31,9 +57,9 @@ var GeocodingService = (function () {
         var _this = this;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
-                var la = "" + position.coords.latitude;
-                var lo = "" + position.coords.longitude;
-                _this.latlng = new google.maps.LatLng({ lat: parseFloat(la), lng: parseFloat(lo) });
+                _this.la = "" + position.coords.latitude;
+                _this.lo = "" + position.coords.longitude;
+                _this.latlng = new google.maps.LatLng({ lat: parseFloat(_this.la), lng: parseFloat(_this.lo) });
             });
         }
         else {
@@ -54,6 +80,22 @@ var GeocodingService = (function () {
         });
         // PROTECTED REGION END
         this._locationSubject.next(this.location);
+    };
+    GeocodingService.prototype.getWeather = function () {
+        // PROTECTED REGION ID weather ENABLED START
+        console.log('Weather is called');
+        if (this.la != undefined && this.lo != undefined) {
+            var requestString = "http://api.openweathermap.org/data/2.5/weather?"
+                + "lat=" + this.la + "&" + "lon=" + this.lo
+                + "&cluster=yes&format=json"
+                + "&apikey=" + this.openWeatherMapKey;
+            this.request = new XMLHttpRequest();
+            this.request.onload = this.proccessResults;
+            this.request.open("get", requestString, true);
+            this.request.send();
+        }
+        // PROTECTED REGION END
+        this._weatherSubject.next(this.weather);
     };
     GeocodingService = __decorate([
         core_1.Injectable(), 

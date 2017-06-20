@@ -21,34 +21,32 @@ export class NoolsService {
 		private dcl: DynamicComponentLoader,
 		private injector: Injector,
 		private _Router: Router,
-		private _logger: LoggerService,
+		private _LoggerService: LoggerService,
 		private _ResourceService: ResourceService,
 		private _DisplayPropertiesService: DisplayPropertiesService){
 		this.flow = nools.flow("Profile Evaluation", function(flow){
 			flow.rule("Lang de-de", {salience:1},[Profile,"m","m.getUser().getLanguage() == 'dede'"], function(facts){
 				_ResourceService.setLangFile("dede");
 			});
-			flow.rule("Environment Brightness Under 40", {salience:2},[Profile,"m","m.getEnvironment().getMovement() >= 1"], function(facts){
-				$('.backgroundPrimary').css('background-color','#232323');
-				$('.backgroundSecondary').css('background-color','#323632');
-				$('.textPrimary').css('color','white !important');
-				$('.borderPrimary').css('border-color','#666666');
-				$('.borderSecondary').css('border-color','black');
-				$('.form-control').css('background-color','black');
-				$('.form-control').css('border-color','#323232');
-				$('.backgroundSecondary').css('background-color','#636363');
-				_DisplayPropertiesService.setProperty('tableClass','table table-striped table-striped-dark table-hover table-condensed textSecondary');
+			flow.rule("User angry", {salience:2},[Profile,"m","(m.getUser().getMood() == 1 && m.getApp().getMoodChecked() == false)"], function(facts){
+				_LoggerService.alert("Do you need help? Then look for the Help tab or ask our friendly staff in the libary! ;)");
+				facts.m.getApp().setMoodChecked(true);
 			});
-			flow.rule("Environment Brightness Over 40", {salience:2},[Profile,"m","m.getEnvironment().getMovement() < 1"], function(facts){
-				$('.backgroundPrimary').css('background-color','white');
-				$('.backgroundSecondary').css('background-color','lightgrey');
-				$('.textPrimary').css('color','black');
-				$('.borderPrimary').css('border-color','black');
-				$('.borderSecondary').css('border-color','white');
-				$('.form-control').css('background-color','#fff');
-				$('.form-control').css('border-color','#ccc');
-				$('.backgroundSecondary').css('background-color','lightgrey');
-				_DisplayPropertiesService.setProperty('tableClass','table table-striped table-hover table-condensed textSecondary');
+			flow.rule("Recommend Learn Location", {salience:3},[Profile,"m","(m.getEnvironment().getLocation() == 'Kernstadt, Paderborn, Deutschland' && m.getEnvironment().getWeather() != 1 && m.getApp().getOutsideChecked() == false)"], function(facts){
+				_LoggerService.alert("It a good time to go outside and try our new group learning places infront of our new building!");
+				facts.m.getApp().setOutsideChecked(true);
+			});
+			flow.rule("Movement High", {salience:2},[Profile,"m","m.getEnvironment().getMovement() > 1"], function(facts){
+				$('.textPrimary').css('font-size','28px');
+				$('.textSecondary').css('font-size','24px');
+			});
+			flow.rule("Movement Med", {salience:2},[Profile,"m","m.getEnvironment().getMovement() == 1"], function(facts){
+				$('.textPrimary').css('font-size','24px');
+				$('.textSecondary').css('font-size','20px');
+			});
+			flow.rule("Movement Low", {salience:2},[Profile,"m","m.getEnvironment().getMovement() < 1"], function(facts){
+				$('.textPrimary').css('font-size','18px');
+				$('.textSecondary').css('font-size','14px');
 			});
 			flow.rule("Platform Desktop", {salience:3},[Profile,"m","m.getPlatform().getDeviceType() == 'desktop'"], function(facts){
 				_DisplayPropertiesService.pushNavigation({path:'/bookDetailsView',key:'showDetails'});

@@ -5,11 +5,13 @@
 import { UserProfile } from './user.profile';
 import { EnvironmentProfile } from './environment.profile';
 import { PlatformProfile } from './platform.profile';
+import { AppProfile } from './app.profile';
 
 export class Profile {
 	public user: UserProfile;
 	public environment: EnvironmentProfile;
 	public platform: PlatformProfile;
+	public app: AppProfile;
 
     constructor()
     {
@@ -17,18 +19,59 @@ export class Profile {
 		this.user = new UserProfile();
 		this.environment = new EnvironmentProfile();
 		this.platform = new PlatformProfile();
+		this.app = new AppProfile();
     }
     
 	// get User profile
 	public getUser() : UserProfile{
 		return this.user;
 	}
+
+	public setUser(v: UserProfile){
+		this.user = v;
+	}
+	
 	// get Environment profile
 	public getEnvironment() : EnvironmentProfile{
 		return this.environment;
 	}
+
+	public setEnvironment(v: EnvironmentProfile){
+		this.environment = v;
+	}
+
 	// get Platform profile
 	public getPlatform() : PlatformProfile{
 		return this.platform;
 	}
+
+	public setPlatform(v: PlatformProfile){
+		this.platform = v;
+	}
+
+	// get App profile
+	public getApp() : AppProfile{
+		return this.app;
+	}
+
+	public setApp(v: AppProfile){
+		this.app = v;
+	}
+
+	// to JSON
+    public toJSON() : string{
+        var json : string = '';
+
+        json += "{";
+        // serialize user
+        json +='"user":' + JSON.stringify(this.user) + ","
+        // serialize platform
+        json += '"platform":' + JSON.stringify(this.platform) + ","
+        //serialize environment
+        json += '"environment":' + JSON.stringify(this.environment) + ","
+        // serialize displayProperties
+        json += '"app":' + JSON.stringify(this.app) + "}"
+
+        return json;
+    }
 }

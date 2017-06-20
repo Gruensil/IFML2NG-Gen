@@ -17,29 +17,51 @@ var core_1 = require('@angular/core');
 var Rx_1 = require('rxjs/Rx');
 var Rx_2 = require('rxjs/Rx');
 var profile_1 = require('./profile/profile');
+var user_profile_1 = require('./profile/user.profile');
+var environment_profile_1 = require('./profile/environment.profile');
+var platform_profile_1 = require('./profile/platform.profile');
+var app_profile_1 = require('./profile/app.profile');
 var nools_service_1 = require('../services/nools.service');
 var userData_service_1 = require('./providers/userData.service');
 var faceDetection_service_1 = require('./providers/faceDetection.service');
 var deviceAPI_service_1 = require('./providers/deviceAPI.service');
 var geocoding_service_1 = require('./providers/geocoding.service');
-var weather_service_1 = require('./providers/weather.service');
+var appState_service_1 = require('./providers/appState.service');
 var ContextControllerService = (function () {
-    function ContextControllerService(flow, userDataService, faceDetectionService, deviceAPIService, geocodingService, weatherService) {
+    function ContextControllerService(flow, userDataService, faceDetectionService, deviceAPIService, geocodingService, appStateService) {
         var _this = this;
         this.flow = flow;
         this.userDataService = userDataService;
         this.faceDetectionService = faceDetectionService;
         this.deviceAPIService = deviceAPIService;
         this.geocodingService = geocodingService;
-        this.weatherService = weatherService;
+        this.appStateService = appStateService;
         this.active = true;
         this.changed = false;
         this._changedSubject = new Rx_2.BehaviorSubject(false);
         this.changedSubject = this._changedSubject.asObservable();
         this.timeInit = 0; //initialization for the Timer
         this.timeFast = 750; //update Time for the Fast Update in ms
-        this.timeSlow = 6000; //update Time for the Slow Update in ms
+        this.timeSlow = 8000; //update Time for the Slow Update in ms
         this.profile = new profile_1.Profile();
+        if (localStorage.getItem('profile') != null) {
+            console.log("old localStorage");
+            var temp;
+            temp = JSON.parse(localStorage.getItem('profile'));
+            console.log(temp);
+            temp.user.__proto__ = user_profile_1.UserProfile.prototype;
+            temp.environment.__proto__ = environment_profile_1.EnvironmentProfile.prototype;
+            temp.platform.__proto__ = platform_profile_1.PlatformProfile.prototype;
+            temp.app.__proto__ = app_profile_1.AppProfile.prototype;
+            this.profile.setApp(temp.app);
+            this.profile.setUser(temp.user);
+            this.profile.setEnvironment(temp.environment);
+            this.profile.setPlatform(temp.platform);
+        }
+        else {
+            console.log("new localStorage");
+            localStorage.setItem('profile', this.profile.toJSON());
+        }
         this.flow.setProfile(this.profile);
         this.session = this.flow.getSession();
         this.age = this.faceDetectionService.ageSubject.subscribe(function (age) {
@@ -90,16 +112,40 @@ var ContextControllerService = (function () {
                 _this.onModified();
             }
         });
+        this.weather = this.geocodingService.weatherSubject.subscribe(function (weather) {
+            if (_this.active) {
+                _this.profile.getEnvironment().setWeather(weather);
+                _this.onModified();
+            }
+        });
         this.deviceType = this.deviceAPIService.deviceTypeSubject.subscribe(function (deviceType) {
             if (_this.active) {
                 _this.profile.getPlatform().setDeviceType(deviceType);
                 _this.onModified();
             }
         });
+        this.moodChecked = this.appStateService.moodCheckedSubject.subscribe(function (moodChecked) {
+            if (_this.active) {
+                _this.profile.getApp().setMoodChecked(moodChecked);
+                _this.onModified();
+            }
+        });
+        this.outsideChecked = this.appStateService.outsideCheckedSubject.subscribe(function (outsideChecked) {
+            if (_this.active) {
+                _this.profile.getApp().setOutsideChecked(outsideChecked);
+                _this.onModified();
+            }
+        });
+        this.userRole = this.appStateService.userRoleSubject.subscribe(function (userRole) {
+            if (_this.active) {
+                _this.profile.getApp().setUserRole(userRole);
+                _this.onModified();
+            }
+        });
         //Manager checks APIs fast
         var timerFast = Rx_1.Observable.timer(this.timeInit, this.timeFast);
         timerFast.subscribe(function (t) {
-            console.log(t);
+            //console.log(t);
             if (_this.active) {
                 _this.fast();
             }
@@ -107,7 +153,7 @@ var ContextControllerService = (function () {
         //Manager checks APIs slow
         var timerSlow = Rx_1.Observable.timer(this.timeInit, this.timeSlow);
         timerSlow.subscribe(function (t) {
-            console.log(t);
+            //console.log(t);
             if (_this.active) {
                 _this.slow();
             }
@@ -124,7 +170,9 @@ var ContextControllerService = (function () {
     ContextControllerService.prototype.slow = function () {
         this.deviceAPIService.getLanguage();
         this.geocodingService.getLocation();
+        this.geocodingService.getWeather();
         this.deviceAPIService.getDeviceType();
+        this.appStateService.getMoodChecked();
     };
     //returns Profile instance
     ContextControllerService.prototype.getProfile = function () {
@@ -140,6 +188,7 @@ var ContextControllerService = (function () {
         });
         this.changed = true;
         this._changedSubject.next(this.changed);
+        localStorage.setItem('profile', this.profile.toJSON());
     };
     ContextControllerService.prototype.setActivation = function (status) {
         this.active = status;
@@ -149,7 +198,7 @@ var ContextControllerService = (function () {
     };
     ContextControllerService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [nools_service_1.NoolsService, userData_service_1.UserDataService, faceDetection_service_1.FaceDetectionService, deviceAPI_service_1.DeviceAPIService, geocoding_service_1.GeocodingService, weather_service_1.WeatherService])
+        __metadata('design:paramtypes', [nools_service_1.NoolsService, userData_service_1.UserDataService, faceDetection_service_1.FaceDetectionService, deviceAPI_service_1.DeviceAPIService, geocoding_service_1.GeocodingService, appState_service_1.AppStateService])
     ], ContextControllerService);
     return ContextControllerService;
 }());

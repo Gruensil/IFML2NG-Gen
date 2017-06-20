@@ -1,5 +1,5 @@
 //
-// Created by IFML2NG2 on 2017/05/30 10:31:57
+// Created by IFML2NG2 on 2017/06/19 23:47:32
 //
 
 // Angular Imports
@@ -83,6 +83,7 @@ export class LentBooksComponent {
 	// stubs for data service calls for data bindings
 	getLentBooksBinding(){
 		// PROTECTED REGION ID _UloJQIC_Eea2S59Os6LSKA.getLentBooksBinding ENABLED START
+		this._dataService.getLendings(this._authenticationService.getId()).then(lendings => this.lentBooksBinding = lendings);
 		// PROTECTED REGION END
 	}
 	

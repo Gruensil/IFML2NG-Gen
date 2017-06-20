@@ -36,25 +36,19 @@ export class DeviceAPIService {
 	
 	constructor(){
 		// PROTECTED REGION ID constructor ENABLED START
-        window.addEventListener('devicelight', event => {
+        // window.addEventListener('devicelight', event => {
 
-            if (event.value > 300) {
-                this.ambientLight = 2;
-            }else if(event.value > 100){
-                    this.ambientLight = 1;
-            }else{
-                this.ambientLight = 0;
-            }
+        //     if (event.value > 300) {
+        //         this.ambientLight = 2;
+        //     }else if(event.value > 100){
+        //             this.ambientLight = 1;
+        //     }else{
+        //         this.ambientLight = 0;
+        //     }
 
-            this.getAmbientLight();
-        });
-
-        // window.addEventListener('online', event => {
-
-        //     console.log("online" + event.returnValue);
-
+        //     this.getAmbientLight();
         // });
-        var i =1;
+
         // Updates Movement information for vertical movement
         window.addEventListener("devicemotion", event => {
 
@@ -68,15 +62,10 @@ export class DeviceAPIService {
 			var z = event.accelerationIncludingGravity.z;
 
 			var w = y+z+x;
-            if(i>75){
-                console.log(w);
-                i=0;
-            }else{
-                i = i+1;
-            }
-            if (w > 17 || w < 8) {
+
+            if (w > 15.5 || w < 8) {
                 this.movement = 2;
-            }else if(w > 15 || w < 11){
+            }else if(w > 14 || w < 8.5){
                     this.movement = 1;
             }else{
                 this.movement = 0;
@@ -122,9 +111,16 @@ export class DeviceAPIService {
 	getDeviceType(){
 		
 		// PROTECTED REGION ID deviceType ENABLED START
-            this.deviceType = navigator.platform;
+            if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini|Mobile/.test(navigator.userAgent)){
+                this.deviceType = "mobile";
+            }else{
+                this.deviceType = "desktop";
+            }
 		// PROTECTED REGION END
 		
 		this._deviceTypeSubject.next(this.deviceType);
 	}
+	
+	// PROTECTED REGION ID addMethods ENABLED START
+	// PROTECTED REGION END
 }

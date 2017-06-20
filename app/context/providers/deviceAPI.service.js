@@ -21,6 +21,8 @@ var DeviceAPIService = (function () {
     // PROTECTED REGION ID deviceAPI ENABLED START
     // PROTECTED REGION END
     function DeviceAPIService() {
+        // PROTECTED REGION ID constructor ENABLED START
+        // window.addEventListener('devicelight', event => {
         var _this = this;
         this._languageSubject = new Rx_1.BehaviorSubject(0);
         this.languageSubject = this._languageSubject.asObservable();
@@ -30,23 +32,15 @@ var DeviceAPIService = (function () {
         this.movementSubject = this._movementSubject.asObservable();
         this._deviceTypeSubject = new Rx_1.BehaviorSubject("init");
         this.deviceTypeSubject = this._deviceTypeSubject.asObservable();
-        // PROTECTED REGION ID constructor ENABLED START
-        window.addEventListener('devicelight', function (event) {
-            if (event.value > 300) {
-                _this.ambientLight = 2;
-            }
-            else if (event.value > 100) {
-                _this.ambientLight = 1;
-            }
-            else {
-                _this.ambientLight = 0;
-            }
-            _this.getAmbientLight();
-        });
-        // window.addEventListener('online', event => {
-        //     console.log("online" + event.returnValue);
+        //     if (event.value > 300) {
+        //         this.ambientLight = 2;
+        //     }else if(event.value > 100){
+        //             this.ambientLight = 1;
+        //     }else{
+        //         this.ambientLight = 0;
+        //     }
+        //     this.getAmbientLight();
         // });
-        var i = 1;
         // Updates Movement information for vertical movement
         window.addEventListener("devicemotion", function (event) {
             // x,y,z are the accelerations on different axis
@@ -57,17 +51,10 @@ var DeviceAPIService = (function () {
             var y = event.accelerationIncludingGravity.y;
             var z = event.accelerationIncludingGravity.z;
             var w = y + z + x;
-            if (i > 75) {
-                console.log(w);
-                i = 0;
-            }
-            else {
-                i = i + 1;
-            }
-            if (w > 17 || w < 8) {
+            if (w > 15.5 || w < 8) {
                 _this.movement = 2;
             }
-            else if (w > 15 || w < 11) {
+            else if (w > 14 || w < 8.5) {
                 _this.movement = 1;
             }
             else {
@@ -105,7 +92,12 @@ var DeviceAPIService = (function () {
     };
     DeviceAPIService.prototype.getDeviceType = function () {
         // PROTECTED REGION ID deviceType ENABLED START
-        this.deviceType = navigator.platform;
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini|Mobile/.test(navigator.userAgent)) {
+            this.deviceType = "mobile";
+        }
+        else {
+            this.deviceType = "desktop";
+        }
         // PROTECTED REGION END
         this._deviceTypeSubject.next(this.deviceType);
     };

@@ -25,4 +25,7 @@ export class UserDataService {
 		// PROTECTED REGION END
 	}
 	
+	
+	// PROTECTED REGION ID addMethods ENABLED START
+	// PROTECTED REGION END
 }

@@ -22,7 +22,12 @@ import { UserDataService } from './context/providers/userData.service';
 import { FaceDetectionService } from './context/providers/faceDetection.service';
 import { DeviceAPIService } from './context/providers/deviceAPI.service';
 import { GeocodingService } from './context/providers/geocoding.service';
-import { WeatherService } from './context/providers/weather.service';
+import { AppStateService } from './context/providers/appState.service';
+
+// PROTECTED REGION ID imports ENABLED START
+
+
+// PROTECTED REGION END
 
 bootstrap(AppComponent,[
     APP_ROUTER_PROVIDERS,
@@ -39,5 +44,10 @@ bootstrap(AppComponent,[
 	FaceDetectionService,
 	DeviceAPIService,
 	GeocodingService,
-	WeatherService,
+	AppStateService,
+	
+	// PROTECTED REGION ID dependencies ENABLED START
+
+
+	// PROTECTED REGION END
 ]);

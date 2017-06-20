@@ -4,24 +4,56 @@
 var user_profile_1 = require('./user.profile');
 var environment_profile_1 = require('./environment.profile');
 var platform_profile_1 = require('./platform.profile');
+var app_profile_1 = require('./app.profile');
 var Profile = (function () {
     function Profile() {
         // initialize context profiles			    	
         this.user = new user_profile_1.UserProfile();
         this.environment = new environment_profile_1.EnvironmentProfile();
         this.platform = new platform_profile_1.PlatformProfile();
+        this.app = new app_profile_1.AppProfile();
     }
     // get User profile
     Profile.prototype.getUser = function () {
         return this.user;
     };
+    Profile.prototype.setUser = function (v) {
+        this.user = v;
+    };
     // get Environment profile
     Profile.prototype.getEnvironment = function () {
         return this.environment;
     };
+    Profile.prototype.setEnvironment = function (v) {
+        this.environment = v;
+    };
     // get Platform profile
     Profile.prototype.getPlatform = function () {
         return this.platform;
+    };
+    Profile.prototype.setPlatform = function (v) {
+        this.platform = v;
+    };
+    // get App profile
+    Profile.prototype.getApp = function () {
+        return this.app;
+    };
+    Profile.prototype.setApp = function (v) {
+        this.app = v;
+    };
+    // to JSON
+    Profile.prototype.toJSON = function () {
+        var json = '';
+        json += "{";
+        // serialize user
+        json += '"user":' + JSON.stringify(this.user) + ",";
+        // serialize platform
+        json += '"platform":' + JSON.stringify(this.platform) + ",";
+        //serialize environment
+        json += '"environment":' + JSON.stringify(this.environment) + ",";
+        // serialize displayProperties
+        json += '"app":' + JSON.stringify(this.app) + "}";
+        return json;
     };
     return Profile;
 }());

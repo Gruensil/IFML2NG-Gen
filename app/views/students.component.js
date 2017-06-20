@@ -1,5 +1,5 @@
 //
-// Created by IFML2NG2 on 2017/05/30 10:31:57
+// Created by IFML2NG2 on 2017/06/19 23:47:32
 //
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -50,7 +50,9 @@ var StudentsComponent = (function () {
     };
     // stubs for data service calls for data bindings
     StudentsComponent.prototype.getStudentBinding = function () {
+        var _this = this;
         // PROTECTED REGION ID _lqgMcIXWEeaLl5C1A6b47w.getStudentBinding ENABLED START
+        this._dataService.getStudents().then(function (students) { return _this.studentBinding = students; });
         // PROTECTED REGION END
     };
     StudentsComponent.prototype.onSelect = function (el) {

@@ -1,5 +1,5 @@
 //
-// Created by IFML2NG2 on 2017/05/30 10:31:57
+// Created by IFML2NG2 on 2017/06/19 23:47:32
 //
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -55,7 +55,9 @@ var BookReservationsComponent = (function () {
     };
     // stubs for data service calls for data bindings
     BookReservationsComponent.prototype.getReservationBinding = function () {
+        var _this = this;
         // PROTECTED REGION ID _zM55EIaoEeaTJocisBH8lA.getReservationBinding ENABLED START
+        this._dataService.getBookReservations().then(function (reservations) { return _this.reservationBinding = reservations; });
         // PROTECTED REGION END
     };
     BookReservationsComponent.prototype.onSelect = function (el) {

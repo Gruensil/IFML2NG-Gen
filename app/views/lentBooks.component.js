@@ -1,5 +1,5 @@
 //
-// Created by IFML2NG2 on 2017/05/30 10:31:57
+// Created by IFML2NG2 on 2017/06/19 23:47:32
 //
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -60,7 +60,9 @@ var LentBooksComponent = (function () {
     };
     // stubs for data service calls for data bindings
     LentBooksComponent.prototype.getLentBooksBinding = function () {
+        var _this = this;
         // PROTECTED REGION ID _UloJQIC_Eea2S59Os6LSKA.getLentBooksBinding ENABLED START
+        this._dataService.getLendings(this._authenticationService.getId()).then(function (lendings) { return _this.lentBooksBinding = lendings; });
         // PROTECTED REGION END
     };
     LentBooksComponent.prototype.onSelect = function (el) {
