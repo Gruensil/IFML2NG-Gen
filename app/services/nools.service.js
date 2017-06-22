@@ -40,17 +40,17 @@ var NoolsService = (function () {
             flow.rule("Don't Recommend Learn Location", { salience: 3 }, [profile_1.Profile, "m", "m.getEnvironment().getLocation() != 'Kernstadt, Paderborn, Deutschland'"], function (facts) {
                 $("#_MjqscFW_Eee_i6NdnvfQJg").hide();
             });
-            flow.rule("Movement High", { salience: 2 }, [profile_1.Profile, "m", "m.getEnvironment().getMovement() > 1"], function (facts) {
-                $('.textPrimary').css('font-size', '28px');
-                $('.textSecondary').css('font-size', '24px');
-            });
-            flow.rule("Movement Med", { salience: 2 }, [profile_1.Profile, "m", "m.getEnvironment().getMovement() == 1"], function (facts) {
+            flow.rule("Movement High", { salience: 2 }, [profile_1.Profile, "m", "m.getEnvironment().getMovement() >= 1"], function (facts) {
                 $('.textPrimary').css('font-size', '24px');
                 $('.textSecondary').css('font-size', '20px');
+                $('.btn btn-default').css('width', '300px');
+                $('.btn btn-default').css('padding-top', '40px');
             });
             flow.rule("Movement Low", { salience: 2 }, [profile_1.Profile, "m", "m.getEnvironment().getMovement() < 1"], function (facts) {
                 $('.textPrimary').css('font-size', '18px');
                 $('.textSecondary').css('font-size', '14px');
+                $('.btn btn-default').css('width', '200px');
+                $('.btn btn-default').css('padding-top', '20px');
             });
             flow.rule("Platform Desktop", { salience: 6 }, [profile_1.Profile, "m", "m.getPlatform().getDeviceType() == 'desktop'"], function (facts) {
                 _DisplayPropertiesService.setProperty('headerBarClass', 'row backgroundSecondary divLine borderSecondary');

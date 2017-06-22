@@ -81,7 +81,7 @@ export class GeocodingService {
 		
 		// PROTECTED REGION ID weather ENABLED START
 
-    console.log('Weather is called');
+    // console.log('Weather is called');
 
 	if(this.la != undefined && this.lo != undefined){
 		var requestString = "http://api.openweathermap.org/data/2.5/weather?"
