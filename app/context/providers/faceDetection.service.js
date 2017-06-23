@@ -30,6 +30,7 @@ var FaceDetectionService = (function () {
         this._faceDetectedSubject = new Rx_1.BehaviorSubject(false);
         this.faceDetectedSubject = this._faceDetectedSubject.asObservable();
         // PROTECTED REGION ID constructor ENABLED START
+        this.gender = "not detected";
         setTimeout(function () {
             var divRoot = $("#affdex_elements")[0];
             // The captured frame's width in pixels
@@ -68,7 +69,7 @@ var FaceDetectionService = (function () {
                 console.log("The detector reports stopped");
             });
             _this.mood = Mood_1.Mood.indifferent;
-            _this.age = 30;
+            _this.age = 0;
             detector.addEventListener("onImageResultsSuccess", function (faces, image, timestamp) {
                 // console.log("Timestamp: " + timestamp.toFixed(2));
                 // console.log("Number of faces found: " + faces.length);

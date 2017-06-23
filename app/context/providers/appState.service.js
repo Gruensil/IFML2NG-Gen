@@ -29,6 +29,7 @@ var AppStateService = (function () {
         this.userRoleSubject = this._userRoleSubject.asObservable();
         this.moodChecked = false;
         this.outsideChecked = false;
+        this.userRole = "none";
         // PROTECTED REGION END
     }
     AppStateService.prototype.getMoodChecked = function () {

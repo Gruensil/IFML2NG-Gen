@@ -30,22 +30,32 @@ var GeocodingService = (function () {
         //init value for latitude and longitude
         this.latlng = new google.maps.LatLng({ lat: 51, lng: 8 });
         this.openWeatherMapKey = "ebc3bac589e89ccc0cf69213042400c5";
+        this.apixuKey = "8d10ab661a23465188a100438172306";
         // PROTECTED REGION ID addMethods ENABLED START
         this.proccessResults = function () {
             var results = JSON.parse(_this.request.responseText);
+            // if (results != undefined) {
+            // 	var condition = results.weather[0].main;
+            // 	switch(condition){
+            // 		case "Clear":{ this.weather = Weather.sunny; break;}
+            // 		case "Rain":{ this.weather = Weather.rainy; break;}
+            // 		default:{ this.weather = Weather.cloudy;}
+            // 	}
+            // }
             if (results != undefined) {
-                var condition = results.weather[0].main;
+                var condition = results.current.condition.code;
+                console.log(condition);
                 switch (condition) {
-                    case "Clear": {
+                    case 1000: {
                         _this.weather = Weather_1.Weather.sunny;
                         break;
                     }
-                    case "Rain": {
-                        _this.weather = Weather_1.Weather.rainy;
+                    case 1003 || 1006 || 1009 || 1030: {
+                        _this.weather = Weather_1.Weather.cloudy;
                         break;
                     }
                     default: {
-                        _this.weather = Weather_1.Weather.cloudy;
+                        _this.weather = Weather_1.Weather.rainy;
                     }
                 }
             }
@@ -85,10 +95,17 @@ var GeocodingService = (function () {
         // PROTECTED REGION ID weather ENABLED START
         // console.log('Weather is called');
         if (this.la != undefined && this.lo != undefined) {
-            var requestString = "http://api.openweathermap.org/data/2.5/weather?"
-                + "lat=" + this.la + "&" + "lon=" + this.lo
-                + "&cluster=yes&format=json"
-                + "&apikey=" + this.openWeatherMapKey;
+            // var requestString = "http://api.openweathermap.org/data/2.5/weather?"
+            // 					+ "lat=" + this.la + "&" + "lon=" + this.lo
+            // 					+ "&cluster=yes&format=json"
+            // 					+ "&apikey=" + this.openWeatherMapKey;
+            // this.request = new XMLHttpRequest();
+            // this.request.onload = this.proccessResults;
+            // this.request.open("get", requestString, true);
+            // this.request.send();
+            var requestString = "https://api.apixu.com/v1/current.json?"
+                + "key=" + this.apixuKey
+                + "&q=" + this.la + "," + this.lo;
             this.request = new XMLHttpRequest();
             this.request.onload = this.proccessResults;
             this.request.open("get", requestString, true);

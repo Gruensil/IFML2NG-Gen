@@ -37,6 +37,7 @@ export class FaceDetectionService {
 	
 	constructor(){
 		// PROTECTED REGION ID constructor ENABLED START
+        this.gender = "not detected";
         setTimeout(()=> {
                 var divRoot = $("#affdex_elements")[0];
 
@@ -84,7 +85,7 @@ export class FaceDetectionService {
                 console.log("The detector reports stopped");
                 });
                 this.mood = Mood.indifferent;
-                this.age = 30;
+                this.age = 0;
                 detector.addEventListener("onImageResultsSuccess", (faces: any, image: any, timestamp:any) => {
                         // console.log("Timestamp: " + timestamp.toFixed(2));
                         // console.log("Number of faces found: " + faces.length);
