@@ -114,7 +114,7 @@ var FaceDetectionService = (function () {
                                 break;
                             }
                             ;
-                        case '45 -54':
+                        case '45 - 54':
                             {
                                 _this.age = 50;
                                 break;
