@@ -124,7 +124,7 @@ export class GeocodingService {
         // }
 		if (results != undefined) {
 			var condition = results.current.condition.code;
-			console.log(condition);
+			//console.log(condition);
 			switch(condition){
 				case 1000:{ this.weather = Weather.sunny; break;}
 
